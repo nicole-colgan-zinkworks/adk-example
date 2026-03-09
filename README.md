@@ -125,3 +125,69 @@ The difference: What happens behind the scenes.
 
 InMemoryMemoryService: Stores raw events
 VertexAiMemoryBankService: Intelligently consolidates before storing
+
+
+## logging
+you can use googles logging plugin for automatic logging
+you attatch it to the runner and since the runner controls the entire execution lifecycle, the plugin can observe absolutely everything that happens
+
+the plugin contains its own callbacks like for after and before models, agents and errors but unlike your callbacks that you wrote, you dont need to define custom ones for each agent or attatch it to the agent
+
+this is good for generic logging and tracing
+
+it writes logs uising pythongs standard logging system
+
+it logs:
+Typical things it logs include:
+
+user messages
+
+LLM requests
+
+LLM responses
+
+tool calls
+
+execution time
+
+errors
+
+• It works for all agents
+
+Because it’s attached to the runner, every agent run automatically gets logged.
+
+
+## evaluation
+use adk eval cli command.
+1) Create an evaluation configuration - define metrics or what you want to measure 2) Create test cases - sample test cases to compare against 3) Run the agent with test query 4) Compare the results
+make sure you have the agent assigned to root agent in the file for evaluation
+
+command:
+`adk eval movie_agent movie_agent/integration.evalset.json --config_file_path=movie_agent/test_config.json --print_detailed_results`
+
+output:
+```
+Eval Set Id: sql_automation_integration_suite
+Eval Id: sex_and_the_city_genre
+Overall Eval Status: PASSED
+---------------------------------------------------------------------
+Metric: response_match_score, Status: PASSED, Score: 0.9090909090909091, Threshold: 0.8
+---------------------------------------------------------------------
+Invocation Details:
++----+------------------------+--------------------------+--------------------------+-----------------------+---------------------+------------------------+
+|    | prompt                 | expected_response        | actual_response          | expected_tool_calls   | actual_tool_calls   | response_match_score   |
++====+========================+==========================+==========================+=======================+=====================+========================+
+|  0 | Whats the genre of the | SELECT genre FROM movies | SELECT genre FROM movies |                       |                     | Status: PASSED, Score: |
+Overall Eval Status: PASSED
+---------------------------------------------------------------------
+Metric: response_match_score, Status: PASSED, Score: 0.9090909090909091, Threshold: 0.8
+---------------------------------------------------------------------
+Invocation Details:
++----+------------------------+--------------------------+--------------------------+-----------------------+---------------------+------------------------+
+|    | prompt                 | expected_response        | actual_response          | expected_tool_calls   | actual_tool_calls   | response_match_score   |
++====+========================+==========================+==========================+=======================+=====================+========================+
+|  0 | Whats the genre of the | SELECT genre FROM movies | SELECT genre FROM movies |                       |                     | Status: PASSED, Score: |
+|    | movie sex in the city? | WHERE film LIKE "Sex and | WHERE film LIKE '%sex in |                       |                     | 0.9090909090909091     |
+|    |                        | the City"                | the city%'               |                       |                     |                        |
++----+------------------------+--------------------------+--------------------------+-----------------------+---------------------+------------------------+
+```

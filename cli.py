@@ -25,7 +25,7 @@ from google.adk.memory import InMemoryMemoryService
 
 from google.genai.types import Content, Part
 
-
+from google.adk.plugins.logging_plugin import LoggingPlugin
 # -------------------------------------------------------------------
 # Constants (avoid hardcoding values throughout the code)
 # -------------------------------------------------------------------
@@ -172,7 +172,8 @@ async def create_runner():
         app_name=APP_NAME,
         agent=agent,
         session_service=session_service,
-        memory_service=memory_service   # memory is now available to our agent - but we need to give it to the agent
+        memory_service=memory_service,   # memory is now available to our agent - but we need to give it to the agent
+        plugins=[LoggingPlugin()]
     )
 
     session = await get_or_create_session(session_service)

@@ -23,7 +23,6 @@ load_dotenv()
 # -------------------------------------------------------------------
 async def auto_save_to_memory(callback_context: CallbackContext):
     """Automatically save the session to memory after each agent turn"""
-    print("agent callback fired")
     # for inMemory, it replaces the whole session with the new one but for persistent, it uses an llm to extract new important things and merges it with whats already there
     try:
         await callback_context._invocation_context.memory_service.add_session_to_memory(
@@ -156,3 +155,5 @@ def create_agent() -> Agent:
         after_agent_callback=auto_save_to_memory,
         tools=[preload_memory],   # force the agent to check memory or use load_memory to allow the agent to use memory whenever it thinks you should
     )
+
+root_agent = create_agent()

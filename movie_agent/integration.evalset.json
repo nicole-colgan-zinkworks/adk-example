@@ -1,0 +1,47 @@
+{
+    "eval_set_id": "sql_automation_integration_suite",
+    "eval_cases": [
+        {
+            "eval_id": "sex_and_the_city_genre",
+            "conversation": [
+                {
+                    "user_content": {
+                        "parts": [
+                            {
+                                "text": "Whats the genre of the movie sex in the city?"
+                            }
+                        ]
+                    },
+                    "final_response": {
+                        "parts": [
+                            {
+                                "text": "SELECT genre FROM movies WHERE film LIKE \"Sex and the City\""
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "eval_id": "invalid_question",
+            "conversation": [
+                {
+                    "user_content": {
+                        "parts": [
+                            {
+                                "text": "Who is the president?"
+                            }
+                        ]
+                    },
+                    "final_response": {
+                        "parts": [
+                            {
+                                "text": "CANNOT_TRANSLATE"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
