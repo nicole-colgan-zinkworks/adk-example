@@ -191,3 +191,106 @@ Invocation Details:
 |    |                        | the City"                | the city%'               |                       |                     |                        |
 +----+------------------------+--------------------------+--------------------------+-----------------------+---------------------+------------------------+
 ```
+
+
+## a2a
+creates server file for the sql agent cause we want to create an a2a app to serve the agent.
+
+uvicorn
+
+This is the ASGI server that runs your FastAPI / A2A app.
+
+It serves your application over HTTP so other services (like your coordinator) can call it.
+
+2. What to_a2a() actually does
+
+This function automatically creates:
+
+Endpoint	Purpose
+/a2a	Main protocol endpoint
+/.well-known/agent-card.json	Metadata about the agent
+internal message routing	Handles requests/responses
+
+you can see the agent card here:
+http://localhost:8001/.well-known/agent-card.json
+
+```
+uvicorn sql_agent_server:sql_translator_app --port 8001                                                             
+```
+> If your running it locallyy run the server in command prompt or something because the debugger keeps disconnecting it
+Simple explanation of your design
+
+run your cli as normal like 
+```
+python cli.py
+```
+
+Create the SQL agent
+
+You first build a normal ADK agent that converts natural language into SQL queries.
+
+Convert the SQL agent into an A2A server
+
+Using to_a2a() you wrap the SQL agent in an A2A-compatible web application.
+
+This does three things automatically:
+
+exposes HTTP endpoints for agent communication
+
+generates an Agent Card (/.well-known/agent-card.json) describing the agent
+
+handles the A2A protocol messaging
+
+So now the SQL agent runs as a remote service.
+
+Create a RemoteA2AAgent (client-side proxy)
+
+In your main application you create:
+
+RemoteA2AAgent
+
+This acts as a local proxy object that knows how to talk to the remote A2A agent.
+
+It does this by reading the Agent Card, which tells it:
+
+the agent name
+
+what it does
+
+where the A2A endpoint is
+
+Add the proxy to the orchestrator as a tool/sub-agent
+
+You pass the RemoteA2AAgent into your orchestrator:
+
+AgentTool(agent=remote_sql_agent)
+
+From the orchestrator’s perspective, it behaves just like a normal local agent.
+
+Runtime flow
+
+When a user asks a question:
+
+User
+ ↓
+Orchestrator Agent
+ ↓
+RemoteA2AAgent (proxy)
+ ↓
+HTTP request
+ ↓
+A2A SQL Agent Server
+ ↓
+SQL Agent
+
+The response then flows back the same way.
+
+SQL Agent
+ ↑
+A2A server
+ ↑
+RemoteA2AAgent
+ ↑
+Orchestrator
+
+Movies NL-to-SQL AgentA conversational CLI agent that translates natural language questions into SQL queries against a local movies database, built with Google ADK and Gemini.Architecture

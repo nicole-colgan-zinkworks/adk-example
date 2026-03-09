@@ -116,7 +116,7 @@ Columns:
 # AGENT FACTORY
 # -------------------------------------------------------------------
 
-def create_agent() -> Agent:
+def create_sql_agent() -> Agent:
     """
     Create the SQL translation agent.
 
@@ -124,7 +124,7 @@ def create_agent() -> Agent:
     """
 
     return Agent(
-        name="sql_translator",
+        name="sql_translator_agent",
 
         model=Gemini(
             model="gemini-2.5-flash-lite"
@@ -133,7 +133,7 @@ def create_agent() -> Agent:
         instruction=f"""
             You are a SQL translation assistant for a movie database.
 
-            Your ONLY job is converting natural language to SQL.
+            Your ONLYjob is converting natural language to SQL.
 
             Database schema:
             {SCHEMA}
@@ -156,4 +156,4 @@ def create_agent() -> Agent:
         tools=[preload_memory],   # force the agent to check memory or use load_memory to allow the agent to use memory whenever it thinks you should
     )
 
-root_agent = create_agent()
+root_agent = create_sql_agent() # needed for evaluation

@@ -1,2 +1,4 @@
 python-dotenv
 tabulate===0.10.0   # For displaying tabular data in a nice format in the console
+google-adk[a2a]
+google-adk[eval]

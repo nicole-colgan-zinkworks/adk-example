@@ -1,0 +1,148 @@
+{
+  "eval_set_result_id": "movie_agent_sql_automation_integration_suite_1773053609.8108022",
+  "eval_set_result_name": "movie_agent_sql_automation_integration_suite_1773053609.8108022",
+  "eval_set_id": "sql_automation_integration_suite",
+  "eval_case_results": [
+    {
+      "eval_set_file": "sql_automation_integration_suite",
+      "eval_set_id": "sql_automation_integration_suite",
+      "eval_id": "invalid_question",
+      "final_eval_status": 1,
+      "eval_metric_results": null,
+      "overall_eval_metric_results": [
+        {
+          "metric_name": "response_match_score",
+          "threshold": 0.8,
+          "criterion": {
+            "threshold": 0.8
+          },
+          "custom_function_path": null,
+          "score": 1.0,
+          "eval_status": 1,
+          "details": {
+            "rubric_scores": null
+          }
+        }
+      ],
+      "eval_metric_result_per_invocation": [
+        {
+          "actual_invocation": {
+            "invocation_id": "e-91c7a8b1-7a2d-41b1-94ef-e17109ffb5fd",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Who is the president?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "CANNOT_TRANSLATE",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "invocation_events": []
+            },
+            "creation_timestamp": 1773053609.630229,
+            "rubrics": null,
+            "app_details": {
+              "agent_details": {
+                "sql_translator": {
+                  "name": "sql_translator",
+                  "instructions": "\n            You are a SQL translation assistant for a movie database.\n\n            Your ONLY job is converting natural language to SQL.\n\n            Database schema:\n            \nTable: movies\n\nColumns:\n- id (INTEGER)\n- film (TEXT)\n- genre (TEXT)\n- lead_studio (TEXT)\n- audience_score (INTEGER)\n- profitability (REAL)\n- rotten_tomatoes (INTEGER)\n- worldwide_gross (REAL)\n- year (INTEGER)\n\n\n            Rules:\n\n            - Output ONLY the SQL query\n            - No explanations\n            - No markdown\n            - Only SELECT statements\n            - Only reference the 'movies' table\n            - Use LIKE for text comparisons\n            - If the question cannot be answered, return exactly:\n            CANNOT_TRANSLATE\n            \n\nYou are an agent. Your internal name is \"sql_translator\".",
+                  "tool_declarations": []
+                }
+              }
+            }
+          },
+          "expected_invocation": {
+            "invocation_id": "",
+            "user_content": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "Who is the president?",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "media_resolution": null,
+                  "code_execution_result": null,
+                  "executable_code": null,
+                  "file_data": null,
+                  "function_call": null,
+                  "function_response": null,
+                  "inline_data": null,
+                  "text": "CANNOT_TRANSLATE",
+                  "thought": null,
+                  "thought_signature": null,
+                  "video_metadata": null
+                }
+              ],
+              "role": null
+            },
+            "intermediate_data": null,
+            "creation_timestamp": 0.0,
+            "rubrics": null,
+            "app_details": null
+          },
+          "eval_metric_results": [
+            {
+              "metric_name": "response_match_score",
+              "threshold": 0.8,
+              "criterion": {
+                "threshold": 0.8
+              },
+              "custom_function_path": null,
+              "score": 1.0,
+              "eval_status": 1,
+              "details": {
+                "rubric_scores": null
+              }
+            }
+          ]
+        }
+      ],
+      "session_id": "___eval___session___bc9a2233-329f-43a5-9aa8-fc1e7b033d3b",
+      "session_details": null,
+      "user_id": "test_user_id"
+    }
+  ],
+  "creation_timestamp": 1773053609.8108022
+}

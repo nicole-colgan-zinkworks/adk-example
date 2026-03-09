@@ -17,7 +17,7 @@ from tabulate import tabulate
 import time
 
 from db import get_db_connection
-from movie_agent.agent import create_agent
+from agents import create_orchestrator_agent
 
 from google.adk.runners import Runner
 from google.adk.sessions import DatabaseSessionService
@@ -88,7 +88,7 @@ async def translate_to_sql(
         )
 
     message = Content(role="user", parts=[Part(text=user_query)])
-
+    sql_result = ""
     try:
         async for event in runner.run_async(
             user_id=USER_ID,
@@ -97,8 +97,7 @@ async def translate_to_sql(
         ):
 
             # The final event contains the model's answer
-            if event.is_final_response() and event.content:
-
+            if event.is_final_response() and event.content and event.content.parts:
                 for part in event.content.parts:
                     if part.text:
                         sql_result = part.text.strip()  # dont stop and return here if you have an after agent calback or youll stop its lifecycle
@@ -155,7 +154,7 @@ async def create_runner():
         └── MemoryService
     """
 
-    agent = create_agent()
+    agent = create_orchestrator_agent()
 
     # Sessions are stored in SQLite so conversations persist (we can resume it)
     # the agent automatically gets the session events (conversation) so it can use it but it doesnt get state. you need to explicitely pass state
